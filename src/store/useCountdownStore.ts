@@ -6,16 +6,9 @@ interface CountdownState {
   subtitle: string;
 }
 
-// 直接从环境变量读取配置，不使用默认值
-const getEnvValue = (key: string): string => {
-  if (typeof process !== 'undefined' && process.env) {
-    return process.env[`NEXT_PUBLIC_${key}`] || '';
-  }
-  return '';
-};
-
 export const useCountdownStore = create<CountdownState>()(() => ({
-  targetDate: getEnvValue('TARGET_DATE'),
-  title: getEnvValue('TITLE'),
-  subtitle: getEnvValue('SUBTITLE'),
+  // 直接使用process.env访问环境变量，Next.js会自动处理
+  targetDate: process.env.NEXT_PUBLIC_TARGET_DATE || '',
+  title: process.env.NEXT_PUBLIC_TITLE || '',
+  subtitle: process.env.NEXT_PUBLIC_SUBTITLE || '',
 }));
