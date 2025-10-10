@@ -9,9 +9,6 @@ const CountdownTimer = dynamic(() => import('@/components/CountdownTimer'), {
 const FullscreenButton = dynamic(() => import('@/components/FullscreenButton'), {
   loading: () => <div className="hidden">加载全屏按钮...</div>
 });
-const AdminPanel = dynamic(() => import('@/components/AdminPanel'), {
-  loading: () => <div className="hidden">加载管理面板...</div>
-});
 
 export default function ClientPage() {
   return (
@@ -21,10 +18,9 @@ export default function ClientPage() {
       </main>
       
       <FullscreenButton />
-      <AdminPanel />
       
       <footer className="w-full py-4 text-sm text-gray-500 dark:text-gray-400">
-        <p>© {new Date().getFullYear()} 重要日期倒计时 | 基于 Next.js 构建</p>
+        <p>© {new Date().getFullYear()} 重要日期倒计时 | 由小沙漠构建</p>
       </footer>
     </div>
   );

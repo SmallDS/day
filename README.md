@@ -34,3 +34,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 配置倒计时信息
+
+本项目使用Vercel环境变量来配置倒计时信息，无需通过前端管理界面。请按照以下步骤在Vercel添加环境变量：
+
+1. 登录您的Vercel账户并进入项目仪表板
+2. 点击"Settings"选项卡
+3. 在左侧菜单中选择"Environment Variables"
+4. 添加以下环境变量：
+
+| 变量名 | 说明 | 示例值 |
+|-------|------|-------|
+| `NEXT_PUBLIC_TARGET_DATE` | 目标日期（格式：YYYY-MM-DD） | `2025-01-01` |
+| `NEXT_PUBLIC_TITLE` | 倒计时标题 | `春节倒计时` |
+| `NEXT_PUBLIC_SUBTITLE` | 倒计时副标题 | `距离春节还有` |
+
+5. 点击"Save"保存环境变量
+6. 重新部署您的项目以应用新的环境变量
+
+注意：环境变量更改后需要重新部署项目才能生效。
