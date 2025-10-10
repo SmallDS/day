@@ -9,10 +9,16 @@ const CountdownTimer = dynamic(() => import('@/components/CountdownTimer'), {
 const FullscreenButton = dynamic(() => import('@/components/FullscreenButton'), {
   loading: () => <div className="hidden">加载全屏按钮...</div>
 });
+const Wallpaper = dynamic(() => import('@/components/Wallpaper'), {
+  ssr: false
+});
 
 export default function ClientPage() {
   return (
     <div className="font-sans flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 text-center">
+      {/* 壁纸组件 */}
+      <Wallpaper />
+      
       <main className="flex flex-col items-center justify-center flex-1 w-full max-w-4xl">
         <CountdownTimer />
       </main>

@@ -49,8 +49,19 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 | `NEXT_PUBLIC_TARGET_DATE` | 目标日期（格式：YYYY-MM-DD） | `2025-01-01` |
 | `NEXT_PUBLIC_TITLE` | 倒计时标题 | `春节倒计时` |
 | `NEXT_PUBLIC_SUBTITLE` | 倒计时副标题 | `距离春节还有` |
+| `NEXT_PUBLIC_WALLPAPER_INTERVAL` | 壁纸切换间隔（小时）<br>-1: 禁用壁纸<br>0: 每天12点更新<br>正整数: 每隔指定小时数更新 | `0` |
 
 5. 点击"Save"保存环境变量
 6. 重新部署您的项目以应用新的环境变量
 
 注意：环境变量更改后需要重新部署项目才能生效。
+
+## 壁纸功能说明
+
+本项目支持自动切换壁纸背景，使用必应每日壁纸API：
+
+- 壁纸数据来源：`https://uapis.cn/api/v1/image/bing-daily`
+- 壁纸切换频率通过`NEXT_PUBLIC_WALLPAPER_INTERVAL`环境变量控制
+- 设置为`-1`可完全禁用壁纸功能，保留默认渐变背景
+- 设置为`0`则每天12点自动更新壁纸
+- 设置为正整数（如`6`）则每隔指定小时数更新壁纸
