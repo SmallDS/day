@@ -80,7 +80,7 @@ export default function Wallpaper() {
       if (intervalId) clearInterval(intervalId);
       if (wallpaperUrl) URL.revokeObjectURL(wallpaperUrl);
     };
-  }, [changeInterval]);
+  }, [changeInterval, wallpaperUrl]);
 
   if (changeInterval === -1 || !wallpaperUrl) {
     return null;
