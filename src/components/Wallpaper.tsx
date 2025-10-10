@@ -29,6 +29,10 @@ export default function Wallpaper() {
         
         // 获取图片blob
         const blob = await response.blob();
+        // 如果有旧的URL，先释放它
+        if (wallpaperUrl) {
+          URL.revokeObjectURL(wallpaperUrl);
+        }
         const url = URL.createObjectURL(blob);
         setWallpaperUrl(url);
       } catch (error) {
@@ -80,7 +84,7 @@ export default function Wallpaper() {
       if (intervalId) clearInterval(intervalId);
       if (wallpaperUrl) URL.revokeObjectURL(wallpaperUrl);
     };
-  }, [changeInterval, wallpaperUrl]);
+  }, [changeInterval]);
 
   if (changeInterval === -1 || !wallpaperUrl) {
     return null;
