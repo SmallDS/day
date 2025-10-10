@@ -3,14 +3,10 @@ import { create } from 'zustand';
 interface WallpaperState {
   wallpaperUrl: string;
   isWallpaperEnabled: boolean;
-  changeInterval: number; // 以小时为单位，-1表示禁用，0表示每天12点
-  lastChangeTime: number;
 }
 
 export const useWallpaperStore = create<WallpaperState>()(() => ({
   wallpaperUrl: '',
-  isWallpaperEnabled: true,
-  // 从环境变量读取壁纸切换间隔
-  changeInterval: parseInt(process.env.NEXT_PUBLIC_WALLPAPER_INTERVAL || '0'),
-  lastChangeTime: 0
+  // 从环境变量读取壁纸开关状态，0表示关闭，1表示开启
+  isWallpaperEnabled: parseInt(process.env.NEXT_PUBLIC_WALLPAPER_ENABLED || '0') === 1
 }));
