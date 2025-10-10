@@ -33,6 +33,17 @@ export default function CountdownTimer() {
   // 格式化数字为两位数
   const formatNumber = (num: number) => String(num).padStart(2, '0');
 
+  // 检查环境变量是否设置
+  if (!targetDate) {
+    return (
+      <div className="flex flex-col items-center justify-center w-full p-6 bg-red-50 dark:bg-red-900/20 rounded-lg">
+        <FaExclamationTriangle className="text-red-500 text-4xl mb-4" />
+        <h2 className="text-2xl font-bold text-red-600 dark:text-red-400">未设置目标日期</h2>
+        <p className="text-gray-700 dark:text-gray-300 mt-2">请在Vercel环境变量中设置NEXT_PUBLIC_TARGET_DATE</p>
+      </div>
+    );
+  }
+  
   // 检查目标日期是否有效
   const isValidDate = !isNaN(new Date(targetDate).getTime());
 
@@ -41,16 +52,16 @@ export default function CountdownTimer() {
     return (
       <div className="flex flex-col items-center justify-center w-full p-6 bg-red-50 dark:bg-red-900/20 rounded-lg">
         <FaExclamationTriangle className="text-red-500 text-4xl mb-4" />
-        <h2 className="text-2xl font-bold text-red-600 dark:text-red-400">日期无效</h2>
-        <p className="text-gray-700 dark:text-gray-300 mt-2">请在管理面板中设置有效的目标日期</p>
+        <h2 className="text-2xl font-bold text-red-600 dark:text-red-400">日期格式无效</h2>
+        <p className="text-gray-700 dark:text-gray-300 mt-2">请确保NEXT_PUBLIC_TARGET_DATE格式为YYYY-MM-DD</p>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col items-center justify-center w-full">
-      <h1 className="text-3xl md:text-5xl font-bold mb-2 transition-colors">{title || '重要日期倒计时'}</h1>
-      <p className="text-xl md:text-2xl mb-8 text-gray-600 dark:text-gray-300">{subtitle || '距离目标日期还有'}</p>
+      <h1 className="text-3xl md:text-5xl font-bold mb-2 transition-colors">{title}</h1>
+      <p className="text-xl md:text-2xl mb-8 text-gray-600 dark:text-gray-300">{subtitle}</p>
       
       {/* 天时分秒 */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 mb-8 w-full max-w-2xl">
