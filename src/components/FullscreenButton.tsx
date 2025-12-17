@@ -30,7 +30,7 @@ export default function FullscreenButton() {
   return (
     <button
       onClick={toggleFullscreen}
-      className="fixed bottom-4 right-4 p-3 bg-gray-800 text-white rounded-full shadow-lg hover:bg-gray-700 transition-colors z-50"
+      className="fixed bottom-4 right-4 p-3 glass-card-strong text-gray-700 dark:text-white rounded-full hover:scale-110 transition-all duration-300 z-50"
       aria-label={isFullscreen ? "退出全屏" : "全屏显示"}
     >
       {isFullscreen ? <FaCompress size={20} /> : <FaExpand size={20} />}
