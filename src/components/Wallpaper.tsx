@@ -3,42 +3,22 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useAppStore } from '@/store/useCountdownStore';
 
-const CACHE_KEY = 'wallpaper_cache';
-const CACHE_DURATION = 6 * 60 * 60 * 1000; // 6小时缓存
-
-interface WallpaperCache {
-  url: string;
-  timestamp: number;
-  date: string;
-}
-
 export default function Wallpaper() {
   const { isWallpaperEnabled } = useAppStore();
   const [wallpaperUrl, setWallpaperUrl] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
   const blobUrlRef = useRef<string>('');
 
   const fetchWallpaper = useCallback(async () => {
+    if (!isWallpaperEnabled) return;
+
+    setLoading(true);
+    setError(false);
+
     try {
-      setLoading(true);
-      const today = new Date().toDateString();
-
-      // 检查缓存
-      const cached = localStorage.getItem(CACHE_KEY);
-      if (cached) {
-        const cacheData: WallpaperCache = JSON.parse(cached);
-        const isValid = Date.now() - cacheData.timestamp < CACHE_DURATION && cacheData.date === today;
-        if (isValid && cacheData.url) {
-          setWallpaperUrl(cacheData.url);
-          setLoading(false);
-          return;
-        }
-      }
-
-      // 获取新壁纸
-      const response = await fetch('https://uapis.cn/api/v1/image/bing-daily', {
-        cache: 'no-store'
-      });
+      // 使用本地 API 代理获取壁纸
+      const response = await fetch('/api/wallpaper');
 
       if (!response.ok) {
         throw new Error('Failed to fetch wallpaper');
@@ -54,20 +34,13 @@ export default function Wallpaper() {
       const url = URL.createObjectURL(blob);
       blobUrlRef.current = url;
       setWallpaperUrl(url);
-
-      // 注意：blob URL 无法缓存到 localStorage，只缓存元数据表示已加载
-      // 实际上每次刷新仍需请求，但可在同一会话中复用
-      localStorage.setItem(CACHE_KEY, JSON.stringify({
-        url: '', // blob URL 无法持久化
-        timestamp: Date.now(),
-        date: today
-      }));
-    } catch (error) {
-      console.error('Error fetching wallpaper:', error);
-    } finally {
+      setLoading(false);
+    } catch (err) {
+      console.error('Wallpaper fetch failed:', err);
+      setError(true);
       setLoading(false);
     }
-  }, []);
+  }, [isWallpaperEnabled]);
 
   useEffect(() => {
     if (!isWallpaperEnabled) {
@@ -84,7 +57,8 @@ export default function Wallpaper() {
     };
   }, [isWallpaperEnabled, fetchWallpaper]);
 
-  if (!isWallpaperEnabled || !wallpaperUrl) {
+  // 壁纸关闭或加载失败时不渲染
+  if (!isWallpaperEnabled || error || !wallpaperUrl) {
     return null;
   }
 
